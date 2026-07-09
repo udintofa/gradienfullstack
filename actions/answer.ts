@@ -15,32 +15,22 @@ export async function saveAnswerAction(
     throw new Error("Waktu habis");
   }
 
-  const existing = await prisma.answers.findFirst({
+  await prisma.answers.upsert({
     where: {
-      attempt_id: attemptId,
-      question_id: questionId,
-    },
-  });
-
-  if (existing) {
-    await prisma.answers.update({
-      where: {
-        id: existing.id,
-      },
-      data: {
-        option_id: optionId,
-      },
-    });
-  } else {
-    await prisma.answers.create({
-      data: {
-        id: crypto.randomUUID(),
+      attempt_id_question_id: {
         attempt_id: attemptId,
         question_id: questionId,
-        option_id: optionId,
       },
-    });
-  }
+    },
+    update: {
+      option_id: optionId,
+    },
+    create: {
+      attempt_id: attemptId,
+      question_id: questionId,
+      option_id: optionId,
+    },
+  });
 
   return {
     success: true,
@@ -52,7 +42,7 @@ export async function getAnswersAction(attemptId: string) {
     await submitAttempt(attemptId);
   }
 
-  return prisma.answers.findMany({
+  return await prisma.answers.findMany({
     where: {
       attempt_id: attemptId,
     },
