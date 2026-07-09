@@ -30,7 +30,7 @@ export async function createSubtryout(data: {
     data: {
       tryout_id: data.tryout_id,
       title: data.title,
-      description: data.description ?? null,
+      description: data.description ?? "",
       duration: data.duration ?? 30,
       order_number: data.order_number ?? 1,
     },

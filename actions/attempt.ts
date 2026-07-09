@@ -12,7 +12,7 @@ export async function startTryoutAction(tryoutId: number) {
     throw new Error("Unauthorized");
   }
 
-  const active = await getActiveAttempt(user.userId, tryoutId);
+  const active = await getActiveAttempt(user.id, tryoutId);
 
   if (active) {
     return {
@@ -26,7 +26,7 @@ export async function startTryoutAction(tryoutId: number) {
   await prisma.attempts.create({
     data: {
       id: attemptId,
-      user_id: user.userId,
+      user_id: user.id,
       tryout_id: tryoutId,
     },
   });

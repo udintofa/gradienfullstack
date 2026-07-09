@@ -21,8 +21,8 @@ type Option = {
 type Question = {
   id: number;
   text: string;
-  explanation: string | null;
-  video: string | null;
+  explanation: string;
+  video_url: string;
   options: Option[];
 };
 
@@ -151,7 +151,7 @@ export default function MentorSubtryoutClient({
 
       <input id="video"
       class="swal2-input"
-      value="${question.video ?? ""}">
+      value="${question.video_url ?? ""}">
 
       <hr>
 

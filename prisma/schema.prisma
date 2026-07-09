@@ -25,9 +25,10 @@ model attempts {
   id           String    @id @db.Char(36)
   user_id      String    @db.Char(36)
   score        Int?
-  started_at   DateTime? @default(now()) @db.Timestamp(0)
+  started_at   DateTime  @default(now()) @db.Timestamp(0)
   submitted_at DateTime? @db.Timestamp(0)
   tryout_id    Int
+
   answers      answers[]
   users        users     @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "attempts_ibfk_1")
   tryouts      tryouts   @relation(fields: [tryout_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_attempt_tryout")
@@ -49,8 +50,8 @@ model materials {
   id         Int       @id @default(autoincrement())
   course_id  Int
   title      String    @db.VarChar(150)
-  content    String?
-  video_url  String?
+  content    String
+  video_url  String
   created_at DateTime? @default(now()) @db.Timestamp(0)
   courses    courses   @relation(fields: [course_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_material_course")
 
@@ -61,7 +62,7 @@ model options {
   id          Int       @id @default(autoincrement())
   question_id Int
   text        String
-  is_correct  Boolean?  @default(false)
+  is_correct  Boolean  @default(false)
   answers     answers[]
   questions   questions @relation(fields: [question_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "options_ibfk_1")
 
@@ -71,9 +72,9 @@ model options {
 model questions {
   id            Int        @id @default(autoincrement())
   text          String
-  explanation   String?
-  video_url     String?
-  created_at    DateTime?  @default(now()) @db.Timestamp(0)
+  explanation   String
+  video_url     String
+  created_at    DateTime  @default(now()) @db.Timestamp(0)
   sub_tryout_id Int
   answers       answers[]
   options       options[]
@@ -86,7 +87,7 @@ model subtryouts {
   id           Int         @id @default(autoincrement())
   tryout_id    Int
   title        String      @db.VarChar(255)
-  description  String?
+  description  String
   order_number Int         @default(1)
   duration     Int         @default(30)
   questions    questions[]
@@ -99,8 +100,8 @@ model tryouts {
   id               Int          @id @default(autoincrement())
   course_id        Int
   title            String       @db.VarChar(255)
-  description      String?
-  duration_minutes Int?
+  description      String
+  duration_minutes Int
   created_at       DateTime?    @default(now()) @db.Timestamp(0)
   attempts         attempts[]
   subtryouts       subtryouts[]
@@ -119,7 +120,7 @@ model users {
   nickname      String      @db.VarChar(100)
   grade         Int
   major         String?     @db.VarChar(100)
-  role          users_role? @default(user)
+  role          users_role @default(user)
   attempts      attempts[]
 }
 

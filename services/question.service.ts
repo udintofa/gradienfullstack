@@ -19,8 +19,8 @@ export async function createQuestion(
       data: {
         sub_tryout_id: subtryoutId,
         text: data.text,
-        explanation: data.explanation || null,
-        video_url: data.videoUrl || null,
+        explanation: data.explanation || "",
+        video_url: data.videoUrl || "",
       },
     });
 
@@ -69,8 +69,8 @@ export async function updateQuestion(
       },
       data: {
         text: data.text,
-        explanation: data.explanation || null,
-        video_url: data.videoUrl || null,
+        explanation: data.explanation || "",
+        video_url: data.videoUrl || "",
       },
     });
 

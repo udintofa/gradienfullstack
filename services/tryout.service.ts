@@ -20,6 +20,7 @@ export async function getTryoutsByCourse(courseId: number) {
     },
     select: {
       id: true,
+      course_id: true,
       title: true,
       description: true,
       duration_minutes: true,
